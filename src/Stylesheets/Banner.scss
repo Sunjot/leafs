@@ -1,0 +1,24 @@
+@import './App.scss';
+
+#banner-wrap {
+    @include flex(row, center, flex-start);
+    width: 100%;
+
+    #main-logo {
+        margin: 60 0 0 0;
+        width: 150px;
+        opacity: 0;
+        animation: fadeinup 1.5s forwards;
+    }
+}
+
+@keyframes fadeinup {
+    from {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-15px);
+        opacity: 1;
+    }
+}
