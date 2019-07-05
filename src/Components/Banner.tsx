@@ -1,10 +1,15 @@
 import * as React from 'react';
 import '../Stylesheets/Banner.scss';
 
-function Banner() {
+type BannerProps = {
+    logoPos: string,
+    nav: string
+}
+
+function Banner({logoPos, nav}: BannerProps) {
     return (
-        <div id="banner-wrap">
-            <img id="main-logo" src="https://i.imgur.com/Au3iKeh.png" />
+        <div id={nav} className="banner-wrap">
+            <img id={logoPos} src="https://i.imgur.com/Au3iKeh.png" />
         </div>
     );
 }

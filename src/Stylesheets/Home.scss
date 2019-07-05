@@ -1,3 +1,10 @@
+@import './App.scss';
+
 #home-wrap {
+    @include flex(column, flex-start, center);
     width: 100%;
+
+    #nav-wrap {
+        @include flex(row, center, flex-start);
+    }
 }

@@ -1,15 +1,33 @@
 @import './App.scss';
 
-#banner-wrap {
+.banner-wrap {
     @include flex(row, center, flex-start);
-    width: 100%;
+    width: 95%;
+    height: 225px;
+    border-bottom: 1px solid black;
+    position: relative;
 
     #main-logo {
-        margin: 60 0 0 0;
+        position: absolute;
+        margin: 40 0 0 0 ;
         width: 150px;
         opacity: 0;
-        animation: fadeinup 1.5s forwards;
+        animation: fadeinup 2s forwards;
     }
+
+    #side-logo {
+        position: absolute;
+        margin: 20 0 0 0;
+        width: 150px;
+        opacity: 1;
+        animation: fadeoutandin 2s forwards;
+        transform-origin: top left;
+    }
+}
+
+#collapse-nav {
+    transform-origin: top;
+    animation: collapsenav 2s forwards;
 }
 
 @keyframes fadeinup {
@@ -18,7 +36,52 @@
         opacity: 0;
     }
     to {
-        transform: translateY(-15px);
+        transform: translateY(-20px);
         opacity: 1;
+    }
+}
+
+@keyframes fadeoutandin {
+    0% {
+        width: 150px;
+        opacity: 1;
+        left: auto;
+        top: auto;
+        margin-top: 20px;
+    }
+    40% {
+        width: 150px;
+        opacity: 0;
+        left: auto;
+        top: auto;
+        margin-top: 20px;
+    }
+    60% {
+        width: 40px;
+        opacity: 0;
+        left: 0;
+        top: 10px;
+        margin-top: 0;
+    }
+    100% {
+        width: 40px;
+        opacity: 1;
+        left: 0;
+        top: 10px;
+        margin-top: 0;
+     
+    }
+
+}
+
+@keyframes collapsenav {
+    0% {
+        height: 225px;
+    }
+    10% {
+        height: 225px;
+    }
+    100% {
+        height: 80px;
     }
 }

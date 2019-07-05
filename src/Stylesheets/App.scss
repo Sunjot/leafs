@@ -36,6 +36,15 @@
   
   @import url('https://fonts.googleapis.com/css?family=Quicksand');  
 
+html {
+  background-color: #faf6f0;
+}
+
 body {
     margin: 0;
+}
+
+#app-wrap {
+  width: 100%;
+  @include flex(column, flex-start, center);
 }
