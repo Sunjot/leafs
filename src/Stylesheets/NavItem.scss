@@ -1,0 +1,34 @@
+@import './App.scss';
+
+#navitem-wrap {
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.5s;
+
+    #info-wrap {
+        font-family: 'Questrial';
+        padding: 5px;
+
+        #title {
+            font-size: 20px;
+            margin: 5px 0 5px 0;
+        }
+    
+        #desc {
+            font-size: 16px;
+        }
+    }
+
+    #navimage {
+        width: 100%;
+    }
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.03, 1.03);
+    }
+}

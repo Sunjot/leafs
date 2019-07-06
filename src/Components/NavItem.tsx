@@ -1,13 +1,21 @@
 import * as React from 'react';
+import '../Stylesheets/NavItem.scss';
 
-type NavProps = {
-    navClick: Function
+interface NavProps {
+    navClick: Function,
+    content: any
 }
 
-function NavItem({navClick}: NavProps) {
+function NavItem({navClick, content}: NavProps) {
     
     return(
-        <div onClick={() => navClick()}>Nav Item</div>
+        <div onClick={() => navClick()} id="navitem-wrap">
+            <img id="navimage" src={content.image}/>
+            <div id="info-wrap">
+                <div id="title">{content.title}</div>
+                <div id="desc">{content.desc}</div>
+            </div>
+        </div>
     )
 }
 
