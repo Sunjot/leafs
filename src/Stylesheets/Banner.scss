@@ -20,14 +20,14 @@
         margin: 20 0 0 0;
         width: 150px;
         opacity: 1;
-        animation: fadeoutandin 2s forwards;
+        animation: fadeoutandin 1.5s forwards;
         transform-origin: top left;
     }
 }
 
 #collapse-nav {
     transform-origin: top;
-    animation: collapsenav 2s forwards;
+    animation: collapsenav 1.5s forwards;
 }
 
 @keyframes fadeinup {

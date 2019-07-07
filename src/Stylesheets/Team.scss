@@ -1,5 +1,75 @@
 @import './App.scss';
 
 #team-wrap {
+    @include flex(column, flex-start, center);
     margin: 20px;
+    opacity: 0;
+    animation: fadein 1s forwards;
+
+    #year-wrap {
+        @include flex(column, flex-start, center);
+
+        #change-year {
+            font-family: 'Questrial';
+            font-size: 17px;
+            border: 1px solid #8d8d8d;
+            padding: 9px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #year-choices {
+            font-family: 'Questrial';
+            font-size: 17px;
+            border: 1px solid #8d8d8d;
+            border-radius: 5px;
+            margin-top: 3px;
+            overflow: hidden;
+            
+            #other-year {
+                padding: 9px;
+                border-bottom: 1px solid #8d8d8d;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #f0ece6;
+                }
+            }
+        }
+    }
+
+    #overview-wrap {
+        margin-top: 20px;
+
+        table {
+            border-collapse: collapse;
+
+            th, td {
+                margin:0;
+                border: 1px solid #8d8d8d;
+                text-align: left;
+                padding: 7 0 7 5;
+            
+                width: 80px;
+                font-family: 'Questrial';
+            }
+
+            th {
+                font-size: 16px;
+            }
+
+            td {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    } 
+    to {
+        opacity: 1;
+    }
 }

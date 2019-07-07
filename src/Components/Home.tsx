@@ -5,7 +5,12 @@ import NavItem from './NavItem';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface MyProps extends RouteComponentProps {
+  logoPos: string,
   updateLogoPos: Function
+}
+
+interface MyState {
+  fade: string
 }
 
 interface Content {
@@ -14,17 +19,29 @@ interface Content {
   desc: string
 }
 
-class Home extends React.Component<MyProps, {}> {
+class Home extends React.Component<MyProps, MyState> {
 
   constructor(props: MyProps){
     super(props);
+    this.state = {
+      fade: 'fadeinhome'
+    }
   }
 
   navClick = () => {
     this.props.updateLogoPos();
+    this.setState({
+      fade: 'fadeouthome'
+    });
     setTimeout(() => {
         this.props.history.push('/team');
-    }, 2000);
+    }, 1500);
+  }
+
+  componentWillMount() { // handles previous page button to expand nav/logo
+    if (this.props.logoPos === 'side-logo') {
+      this.props.updateLogoPos();
+    }
   }
 
   render() {
@@ -47,7 +64,7 @@ class Home extends React.Component<MyProps, {}> {
     };
 
     return (
-      <div id="home-wrap">
+      <div id="home-wrap" className={this.state.fade}>
         <div id="nav-wrap">
           <NavItem navClick={this.navClick} content={teamContent} />
           <NavItem navClick={this.navClick} content={playerContent} />

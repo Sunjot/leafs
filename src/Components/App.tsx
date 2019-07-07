@@ -21,10 +21,18 @@ class App extends React.Component<any, MyState> {
   }
 
   updateLogoPos = () => {
-    this.setState({
-      logoPos: 'side-logo',
-      nav: 'collapse-nav'
-    });
+    if(this.state.logoPos === 'main-logo') {
+      this.setState({
+        logoPos: 'side-logo',
+        nav: 'collapse-nav'
+      });
+    }
+    else {
+      this.setState({
+        logoPos: 'main-logo',
+        nav: 'expand-nav'
+      });
+    }
   }
 
   render() {
@@ -32,9 +40,9 @@ class App extends React.Component<any, MyState> {
       <Switch>
         <div id="app-wrap">
           <Banner logoPos={this.state.logoPos} nav={this.state.nav} />
-          <Route exact path="/" render={() => <Home updateLogoPos={this.updateLogoPos} />} />
+          <Route exact path="/" render={() => <Home logoPos={this.state.logoPos} updateLogoPos={this.updateLogoPos} />} />
           <Route exact path="/team" render={() => <Team/>} />
-          <Route render={() => <Redirect to="/" />}/>
+          {/* <Route render={() => <Redirect to="/" />}/> */}
         </div>
       </Switch>
     )
