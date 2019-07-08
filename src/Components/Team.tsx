@@ -1,18 +1,20 @@
 import * as React from 'react';
 import '../Stylesheets/Team.scss';
-var LineChart = require("react-chartjs").Line;
+import { Line } from "react-chartjs-2";
 
 interface MyState {
     year: string,
     yearOptions: Array<string>,
     showChoices: boolean,
     seasonData: Array<Season>,
-    currentSeason: Season
+    currentSeason: Season,
+    currentMonthData: Array<number>
 }
 
 interface Season {
     current?: boolean,
     year?: string,
+    monthData?: Array<number>,
     wins?: number,
     losses?: number,
     ot?: number,
@@ -31,7 +33,8 @@ class Team extends React.Component<{}, MyState> {
             yearOptions: [],
             showChoices: false,
             seasonData: [],
-            currentSeason: {}
+            currentSeason: {},
+            currentMonthData: []
         };
     }
 
@@ -41,10 +44,16 @@ class Team extends React.Component<{}, MyState> {
         }).then((data) => {
             return data.json();
         }).then((data) => {
+
             let current: Season = {};
             let yearOptions: Array<string> = [];
+            let monthData: Array<number> = []
+
             data.map((s: Season) => { 
-                if (s.current) current = s; 
+                if (s.current) {
+                    current = s; 
+                    monthData = s.monthData;
+                }
                 yearOptions.push(s.year);
             });
             
@@ -52,7 +61,8 @@ class Team extends React.Component<{}, MyState> {
                 year: current.year,
                 yearOptions: yearOptions,
                 seasonData: data,
-                currentSeason: current
+                currentSeason: current,
+                currentMonthData: monthData
             });
         })
     }
@@ -70,24 +80,50 @@ class Team extends React.Component<{}, MyState> {
     }
 
     otherYear = (e: any) => {
-        let currentSeason: Season = {};
-        this.state.seasonData.map((s, i) => {
-            if(s.year === e.target.innerHTML) currentSeason = s;
-        });
-        this.setState({
-            year: e.target.innerHTML,
-            currentSeason: currentSeason
-        });
+
+        if (this.state.year !== e.target.innerHTML) {
+            let currentSeason: Season = {};
+            let monthData: Array<number> = [];
+            
+            this.state.seasonData.map((s, i) => {
+                if(s.year === e.target.innerHTML) {
+                    currentSeason = s;
+                    monthData = s.monthData;
+                }
+            });
+            this.setState({
+                year: e.target.innerHTML,
+                currentSeason: currentSeason,
+                currentMonthData: monthData
+            });
+        }
     }
 
     render() {
         let chartData = {
             labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March', 'April'],
             datasets: [{
-                label: 'Wins',
-                data: [8, 10, 8, 4, 9, 6, 1],
-                fillColor: "rgba(0, 0, 0, 0)"
+                label: 'Win %',
+                data: this.state.currentMonthData,
+                fill: false,
+                borderColor: "rgb(23, 102, 130)",
+                borderWidth: 2,
+                pointBackgroundColor: "rgb(23, 102, 130)"
             }]
+        }
+
+        let chartOptions = {
+            title: {
+                display: true,
+                text: 'Win% by Month',
+                fontSize: 16,
+                fontColor: 'black',
+                fontFamily: 'Questrial',
+                padding: 15
+            },
+            legend: {
+                display: false
+            }
         }
 
         return(
@@ -108,7 +144,7 @@ class Team extends React.Component<{}, MyState> {
                     <div id ="basics">
                         <div id="basic-stats">
                             {Object.entries(this.state.currentSeason).map(([k, v], i) => {
-                                if (i > 2) // want to leave out _id, year and current boolean
+                                if (i > 3) // want to leave out _id, year and current boolean
                                     return(
                                         <div key={i} className="stat-box">
                                             <div className="stat-title">{k}</div>
@@ -117,7 +153,9 @@ class Team extends React.Component<{}, MyState> {
                                     );
                             })}
                         </div>
-                        <LineChart data={chartData} width="600" height="250"/>
+                        <div id="basic-chart">
+                            <Line data={chartData} options={chartOptions} width={600} height={250} />
+                        </div>
                     </div>
                 </div>
             </div>
