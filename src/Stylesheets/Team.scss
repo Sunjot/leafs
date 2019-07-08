@@ -2,13 +2,18 @@
 
 #team-wrap {
     @include flex(column, flex-start, center);
-    margin: 20px;
+    margin: 20 0 20 0;
     opacity: 0;
     animation: fadein 1s forwards;
+    position: relative;
+    width: 95%;
 
     #year-wrap {
         @include flex(column, flex-start, center);
-
+        position: absolute;
+        left: 0;
+        top: 0;
+       
         #change-year {
             font-family: 'Questrial';
             font-size: 17px;
@@ -25,11 +30,13 @@
             border-radius: 5px;
             margin-top: 3px;
             overflow: hidden;
-            
+          
             #other-year {
                 padding: 9px;
                 border-bottom: 1px solid #8d8d8d;
                 cursor: pointer;
+                background-color: #faf6f0;
+                transition: background-color 0.5s;
 
                 &:hover {
                     background-color: #f0ece6;
@@ -39,7 +46,7 @@
     }
 
     #overview-wrap {
-        margin-top: 20px;
+        margin-top: 60px;
 
         table {
             border-collapse: collapse;

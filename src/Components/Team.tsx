@@ -4,7 +4,21 @@ import '../Stylesheets/Team.scss';
 interface MyState {
     year: string,
     yearOptions: Array<string>,
-    showChoices: boolean
+    showChoices: boolean,
+    seasonData: Array<Season>,
+    currentSeason: Season
+}
+
+interface Season {
+    current?: boolean,
+    year?: string,
+    wins?: number,
+    losses?: number,
+    ot?: number,
+    points?: number,
+    row?: number,
+    gf?: number,
+    ga?: number
 }
 
 class Team extends React.Component<{}, MyState> {
@@ -12,10 +26,35 @@ class Team extends React.Component<{}, MyState> {
     constructor(props: any){
         super(props);
         this.state = {
-            year: '2018-19',
-            yearOptions: ['2018-19', '2017-18', '2016-17'],
-            showChoices: false
+            year: undefined,
+            yearOptions: [],
+            showChoices: false,
+            seasonData: [],
+            currentSeason: {}
         };
+    }
+
+    componentWillMount = () => {
+        fetch('/api/seasons', {
+            method: 'GET'
+        }).then((data) => {
+            return data.json();
+        }).then((data) => {
+
+            let current: Season = {};
+            let yearOptions: Array<string> = [];
+            data.map((s: Season) => { 
+                if (s.current) current = s; 
+                yearOptions.push(s.year);
+            });
+            
+            this.setState({
+                year: current.year,
+                yearOptions: yearOptions,
+                seasonData: data,
+                currentSeason: current
+            });
+        })
     }
 
     mouseEnter = () => {
@@ -30,6 +69,17 @@ class Team extends React.Component<{}, MyState> {
         });
     }
 
+    otherYear = (e: any) => {
+        let currentSeason: Season = {};
+        this.state.seasonData.map((s, i) => {
+            if(s.year === e.target.innerHTML) currentSeason = s;
+        });
+        this.setState({
+            year: e.target.innerHTML,
+            currentSeason: currentSeason
+        });
+    }
+
     render() {
         return(
             <div id="team-wrap">
@@ -39,7 +89,7 @@ class Team extends React.Component<{}, MyState> {
                         <div id="year-choices">
                             {this.state.yearOptions.map((yr, x) => {
                                 return (
-                                    <div id="other-year" key={x}>{yr}</div>
+                                    <div id="other-year" onClick={this.otherYear} key={x}>{yr}</div>
                                 )
                             })}
                         </div>
@@ -47,24 +97,23 @@ class Team extends React.Component<{}, MyState> {
                 </div>
                 <div id="overview-wrap">
                     <table>
-                        <tr>
-                            <th>Wins</th>
-                            <th>Losses</th>
-                            <th>OT</th>
-                            <th>Points</th>
-                            <th>Row</th>
-                            <th>GF</th>
-                            <th>GA</th>
-                        </tr>
-                        <tr>
-                            <td>46</td>
-                            <td>28</td>
-                            <td>8</td>
-                            <td>100</td>
-                            <td>46</td>
-                            <td>286</td>
-                            <td>251</td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <th>Wins</th>
+                                <th>Losses</th>
+                                <th>OT</th>
+                                <th>Points</th>
+                                <th>Row</th>
+                                <th>GF</th>
+                                <th>GA</th>
+                            </tr>
+                            <tr>
+                                {Object.entries(this.state.currentSeason).map(([k, v], i) => {
+                                    if (i > 2) // want to leave out _id, year and current boolean
+                                        return(<td>{v}</td>);
+                                })}
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
