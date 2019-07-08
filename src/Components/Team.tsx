@@ -1,5 +1,6 @@
 import * as React from 'react';
 import '../Stylesheets/Team.scss';
+var LineChart = require("react-chartjs").Line;
 
 interface MyState {
     year: string,
@@ -40,7 +41,6 @@ class Team extends React.Component<{}, MyState> {
         }).then((data) => {
             return data.json();
         }).then((data) => {
-
             let current: Season = {};
             let yearOptions: Array<string> = [];
             data.map((s: Season) => { 
@@ -81,6 +81,15 @@ class Team extends React.Component<{}, MyState> {
     }
 
     render() {
+        let chartData = {
+            labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March', 'April'],
+            datasets: [{
+                label: 'Wins',
+                data: [8, 10, 8, 4, 9, 6, 1],
+                fillColor: "rgba(0, 0, 0, 0)"
+            }]
+        }
+
         return(
             <div id="team-wrap">
                 <div id="year-wrap" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
@@ -96,25 +105,20 @@ class Team extends React.Component<{}, MyState> {
                     }
                 </div>
                 <div id="overview-wrap">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Wins</th>
-                                <th>Losses</th>
-                                <th>OT</th>
-                                <th>Points</th>
-                                <th>Row</th>
-                                <th>GF</th>
-                                <th>GA</th>
-                            </tr>
-                            <tr>
-                                {Object.entries(this.state.currentSeason).map(([k, v], i) => {
-                                    if (i > 2) // want to leave out _id, year and current boolean
-                                        return(<td>{v}</td>);
-                                })}
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id ="basics">
+                        <div id="basic-stats">
+                            {Object.entries(this.state.currentSeason).map(([k, v], i) => {
+                                if (i > 2) // want to leave out _id, year and current boolean
+                                    return(
+                                        <div key={i} className="stat-box">
+                                            <div className="stat-title">{k}</div>
+                                            <div className="stat-number">{v}</div>
+                                        </div>
+                                    );
+                            })}
+                        </div>
+                        <LineChart data={chartData} width="600" height="250"/>
+                    </div>
                 </div>
             </div>
         );
