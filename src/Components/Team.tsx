@@ -1,27 +1,16 @@
 import * as React from 'react';
 import '../Stylesheets/Team.scss';
 import { Line } from "react-chartjs-2";
+import TeamSection from './TeamSection';
+import Year from './Year';
+import { Season } from './Interfaces/SeasonInterface';
 
 interface MyState {
     year: string,
     yearOptions: Array<string>,
-    showChoices: boolean,
     seasonData: Array<Season>,
     currentSeason: Season,
     currentMonthData: Array<number>
-}
-
-interface Season {
-    current?: boolean,
-    year?: string,
-    monthData?: Array<number>,
-    wins?: number,
-    losses?: number,
-    ot?: number,
-    points?: number,
-    row?: number,
-    gf?: number,
-    ga?: number
 }
 
 class Team extends React.Component<{}, MyState> {
@@ -31,7 +20,6 @@ class Team extends React.Component<{}, MyState> {
         this.state = {
             year: undefined,
             yearOptions: [],
-            showChoices: false,
             seasonData: [],
             currentSeason: {},
             currentMonthData: []
@@ -67,36 +55,22 @@ class Team extends React.Component<{}, MyState> {
         })
     }
 
-    mouseEnter = () => {
-        this.setState({
-            showChoices: true
-        });
-    }
-
-    mouseLeave = () => {
-        this.setState({
-            showChoices: false
-        });
-    }
-
     otherYear = (e: any) => {
 
-        if (this.state.year !== e.target.innerHTML) {
-            let currentSeason: Season = {};
-            let monthData: Array<number> = [];
-            
-            this.state.seasonData.map((s, i) => {
-                if(s.year === e.target.innerHTML) {
-                    currentSeason = s;
-                    monthData = s.monthData;
-                }
-            });
-            this.setState({
-                year: e.target.innerHTML,
-                currentSeason: currentSeason,
-                currentMonthData: monthData
-            });
-        }
+        let currentSeason: Season = {};
+        let monthData: Array<number> = [];
+
+        this.state.seasonData.map((s, i) => {
+            if(s.year === e.target.innerHTML) {
+                currentSeason = s;
+                monthData = s.monthData;
+            }
+        });
+        this.setState({
+            year: e.target.innerHTML,
+            currentSeason: currentSeason,
+            currentMonthData: monthData
+        });
     }
 
     render() {
@@ -128,35 +102,9 @@ class Team extends React.Component<{}, MyState> {
 
         return(
             <div id="team-wrap">
-                <div id="year-wrap" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
-                    <div id="change-year">{this.state.year}</div>
-                    {this.state.showChoices && 
-                        <div id="year-choices">
-                            {this.state.yearOptions.map((yr, x) => {
-                                return (
-                                    <div id="other-year" onClick={this.otherYear} key={x}>{yr}</div>
-                                )
-                            })}
-                        </div>
-                    }
-                </div>
+                <Year yearOptions={this.state.yearOptions} year={this.state.year} otherYear={this.otherYear} />
                 <div id="overview-wrap">
-                    <div id ="basics">
-                        <div id="basic-stats">
-                            {Object.entries(this.state.currentSeason).map(([k, v], i) => {
-                                if (i > 3) // want to leave out _id, year and current boolean
-                                    return(
-                                        <div key={i} className="stat-box">
-                                            <div className="stat-title">{k}</div>
-                                            <div className="stat-number">{v}</div>
-                                        </div>
-                                    );
-                            })}
-                        </div>
-                        <div id="basic-chart">
-                            <Line data={chartData} options={chartOptions} width={600} height={250} />
-                        </div>
-                    </div>
+                    <TeamSection currentSeason={this.state.currentSeason} chartData={chartData} chartOptions={chartOptions} />
                 </div>
             </div>
         );

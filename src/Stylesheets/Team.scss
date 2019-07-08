@@ -48,10 +48,17 @@
     #overview-wrap {
         margin-top: 60px;
 
-        #basics {
+        #team-section {
             @include flex(column, flex-start, center);
 
-            #basic-stats {
+            #team-section-title {
+                font-family: 'Titillium Web';
+                font-size: 30px;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+            }
+
+            #team-section-stats {
                 @include flex(row, center, flex-start);
                 flex-wrap: wrap;
 
@@ -77,7 +84,7 @@
                 }
             }
 
-            #basic-chart {
+            #team-section-chart {
                 margin: 20 0 20 0;
             }
         }
