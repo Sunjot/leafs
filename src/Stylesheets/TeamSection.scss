@@ -1,0 +1,38 @@
+@import './App.scss';
+
+#team-section {
+    @include flex(column, flex-start, center);
+
+    #team-section-title {
+        font-family: 'Titillium Web';
+        font-size: 30px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    #team-section-stats {
+        @include flex(row, center, flex-start);
+        flex-wrap: wrap;
+
+        .stat-box {
+            font-family: 'Questrial';                
+            padding: 15px;
+            border: 1px solid #8d8d8d;
+            border-radius: 5px;
+            margin: 5px;
+            text-align: center;
+            width: 70px;
+            
+            .stat-title {
+                font-size: 14px;
+                margin: 5px;
+                text-transform: uppercase;
+            }
+
+            .stat-number {
+                font-size: 25px;
+                margin: 5px;
+            }
+        }
+    }
+}

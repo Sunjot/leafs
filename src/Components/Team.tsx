@@ -6,11 +6,10 @@ import Year from './Year';
 import { Season } from './Interfaces/SeasonInterface';
 
 interface MyState {
-    year: string,
-    yearOptions: Array<string>,
-    seasonData: Array<Season>,
-    currentSeason: Season,
-    currentMonthData: Array<number>
+    year: string, // active year
+    yearOptions: Array<string>, // list of years to choose from
+    seasonData: Array<Season>, // entire object of seasons data
+    currentSeason: Season // object of active seasons data
 }
 
 class Team extends React.Component<{}, MyState> {
@@ -21,8 +20,7 @@ class Team extends React.Component<{}, MyState> {
             year: undefined,
             yearOptions: [],
             seasonData: [],
-            currentSeason: {},
-            currentMonthData: []
+            currentSeason: { general: {}, metrics: {} }
         };
     }
 
@@ -35,13 +33,9 @@ class Team extends React.Component<{}, MyState> {
 
             let current: Season = {};
             let yearOptions: Array<string> = [];
-            let monthData: Array<number> = []
 
             data.map((s: Season) => { 
-                if (s.current) {
-                    current = s; 
-                    monthData = s.monthData;
-                }
+                if (s.current) current = s; 
                 yearOptions.push(s.year);
             });
             
@@ -49,8 +43,7 @@ class Team extends React.Component<{}, MyState> {
                 year: current.year,
                 yearOptions: yearOptions,
                 seasonData: data,
-                currentSeason: current,
-                currentMonthData: monthData
+                currentSeason: current
             });
         })
     }
@@ -58,53 +51,42 @@ class Team extends React.Component<{}, MyState> {
     otherYear = (e: any) => {
 
         let currentSeason: Season = {};
-        let monthData: Array<number> = [];
 
         this.state.seasonData.map((s, i) => {
-            if(s.year === e.target.innerHTML) {
-                currentSeason = s;
-                monthData = s.monthData;
-            }
+            if (s.year === e.target.innerHTML) currentSeason = s;
         });
+
         this.setState({
             year: e.target.innerHTML,
-            currentSeason: currentSeason,
-            currentMonthData: monthData
+            currentSeason: currentSeason
         });
     }
 
     render() {
-        let chartData = {
-            labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March', 'April'],
-            datasets: [{
-                label: 'Win %',
-                data: this.state.currentMonthData,
-                fill: false,
-                borderColor: "rgb(23, 102, 130)",
-                borderWidth: 2,
-                pointBackgroundColor: "rgb(23, 102, 130)"
-            }]
-        }
 
-        let chartOptions = {
-            title: {
-                display: true,
-                text: 'Win% by Month',
-                fontSize: 16,
-                fontColor: 'black',
-                fontFamily: 'Questrial',
-                padding: 15
-            },
-            legend: {
-                display: false
-            }
-        }
+        // Passing both down multiple components so combined into a single prop
+        let generalChartData = {dataLabel: "Win%", titleText: "Win% by Month"};
+        let metricChartData = {dataLabel: "CF%", titleText: "CF% by Month"};
 
         return(
             <div id="team-wrap">
-                <Year yearOptions={this.state.yearOptions} year={this.state.year} otherYear={this.otherYear} />
+                <Year 
+                    yearOptions={this.state.yearOptions} 
+                    year={this.state.year} 
+                    otherYear={this.otherYear} 
+                />
                 <div id="overview-wrap">
-                    <TeamSection currentSeason={this.state.currentSeason} chartData={chartData} chartOptions={chartOptions} />
+                    <TeamSection 
+                        title="General" 
+                        currentSeason={this.state.currentSeason.general} 
+                        labels={generalChartData} 
+                    />
+                    <div className="divider"></div>
+                    <TeamSection 
+                        title="Metrics" 
+                        currentSeason={this.state.currentSeason.metrics} 
+                        labels={metricChartData} 
+                    />
                 </div>
             </div>
         );

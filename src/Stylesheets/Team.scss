@@ -8,86 +8,18 @@
     position: relative;
     width: 95%;
 
-    #year-wrap {
-        @include flex(column, flex-start, center);
-        position: absolute;
-        left: 0;
-        top: 0;
-       
-        #change-year {
-            font-family: 'Questrial';
-            font-size: 17px;
-            border: 1px solid #8d8d8d;
-            padding: 9px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #year-choices {
-            font-family: 'Questrial';
-            font-size: 17px;
-            border: 1px solid #8d8d8d;
-            border-radius: 5px;
-            margin-top: 3px;
-            overflow: hidden;
-          
-            #other-year {
-                padding: 9px;
-                border-bottom: 1px solid #8d8d8d;
-                cursor: pointer;
-                background-color: #faf6f0;
-                transition: background-color 0.5s;
-
-                &:hover {
-                    background-color: #f0ece6;
-                }
-            }
-        }
-    }
-
     #overview-wrap {
+        @include flex(column, flex-start, center);
         margin-top: 60px;
+        width: 100%;
 
-        #team-section {
-            @include flex(column, flex-start, center);
-
-            #team-section-title {
-                font-family: 'Titillium Web';
-                font-size: 30px;
-                margin-bottom: 20px;
-                text-transform: uppercase;
-            }
-
-            #team-section-stats {
-                @include flex(row, center, flex-start);
-                flex-wrap: wrap;
-
-                .stat-box {
-                    font-family: 'Questrial';                
-                    padding: 15px;
-                    border: 1px solid #8d8d8d;
-                    border-radius: 5px;
-                    margin: 5px;
-                    text-align: center;
-                    width: 60px;
-                    
-                    .stat-title {
-                        font-size: 14px;
-                        margin: 5px;
-                        text-transform: uppercase;
-                    }
-
-                    .stat-number {
-                        font-size: 25px;
-                        margin: 5px;
-                    }
-                }
-            }
-
-            #team-section-chart {
-                margin: 20 0 20 0;
-            }
+        .divider {
+            height: 5px;
+            width: 100px;
+            background-color: #8b8b8b;
+            margin: 40 0 40 0;
         }
+
     }
 }
 

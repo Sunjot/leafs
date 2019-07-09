@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../Stylesheets/Year.scss';
 
 interface MyState {
     showChoices: boolean,
@@ -43,13 +44,11 @@ class Year extends React.Component<MyProps, MyState> {
 
     updateYear = (e: any) => {
         if (this.state.year !== e.target.innerHTML) {
-
             this.setState({
                 year: e.target.innerHTML
             });
 
             if (this.props.otherYear) {
-                console.log("test");
                 this.props.otherYear(e);
             }
         }

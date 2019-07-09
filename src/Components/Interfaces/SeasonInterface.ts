@@ -2,7 +2,22 @@
 export interface Season {
     current?: boolean,
     year?: string,
-    monthData?: Array<number>,
+    general?: Basic,
+    metrics?: Metrics
+}
+
+export interface Metrics {
+    data?: Array<number>,
+    pp?: number,
+    pk?: number,
+    cf?: number,
+    xgf?: number,
+    scf?: number,
+    pdo?: number
+}
+
+export interface Basic {
+    data?: Array<number>,
     wins?: number,
     losses?: number,
     ot?: number,

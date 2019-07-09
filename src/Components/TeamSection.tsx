@@ -1,21 +1,23 @@
 import * as React from 'react';
 import { Line } from "react-chartjs-2";
-import { Season } from './Interfaces/SeasonInterface';
+import { Season, Basic, Metrics } from './Interfaces/SeasonInterface';
+import '../Stylesheets/TeamSection.scss';
+import { ChartI } from './Interfaces/ChartInterface';
+import Chart from './Chart';
 
-interface TeamSectionProps {
-    currentSeason: Season,
-    chartData: any,
-    chartOptions: any
+interface TeamSectionProps extends ChartI {
+    currentSeason: Basic | Metrics,
+    title: string
 }
 
-function TeamSection({currentSeason, chartData, chartOptions}: TeamSectionProps) {
+function TeamSection({currentSeason, title, labels}: TeamSectionProps) {
 
     return(
         <div id ="team-section">
-            <div id="team-section-title">General</div>
+            <div id="team-section-title">{title}</div>
             <div id="team-section-stats">
                 {Object.entries(currentSeason).map(([k, v], i) => {
-                    if (i > 3) // want to leave out _id, year and current boolean
+                    if (i > 0) 
                         return(
                             <div key={i} className="stat-box">
                                 <div className="stat-title">{k}</div>
@@ -24,9 +26,7 @@ function TeamSection({currentSeason, chartData, chartOptions}: TeamSectionProps)
                         );
                 })}
             </div>
-            <div id="team-section-chart">
-                <Line data={chartData} options={chartOptions} width={600} height={250} />
-            </div>
+            <Chart data={currentSeason.data} labels={labels} />
         </div>
     );
 }
