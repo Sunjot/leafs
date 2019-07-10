@@ -28,17 +28,17 @@ class Home extends React.Component<MyProps, MyState> {
     }
   }
 
-  navClick = () => {
+  navClick = (r: string) => {
     this.props.updateLogoPos();
     this.setState({
       fade: 'fadeouthome'
     });
     setTimeout(() => {
-        this.props.history.push('/team');
+        this.props.history.push(r);
     }, 1500);
   }
 
-  componentWillMount() { // handles previous page button to expand nav/logo
+  componentDidMount() { // handles previous page button to expand nav/logo
     if (this.props.logoPos === 'side-logo') {
       this.props.updateLogoPos();
     }
@@ -66,8 +66,8 @@ class Home extends React.Component<MyProps, MyState> {
     return (
       <div id="home-wrap" className={this.state.fade}>
         <div id="nav-wrap">
-          <NavItem navClick={this.navClick} content={teamContent} />
-          <NavItem navClick={this.navClick} content={playerContent} />
+          <NavItem navClick={() => this.navClick("/team")} content={teamContent} />
+          <NavItem navClick={() => this.navClick("/players")} content={playerContent} />
           <NavItem navClick={this.navClick} content={scheduleContent} />
         </div>
       </div>

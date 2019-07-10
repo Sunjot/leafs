@@ -29,7 +29,7 @@ class Team extends React.Component<MyProps, MyState> {
         };
     }
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         // only collapse banner if page was loaded through URL; otherwise, 
         // the navigation callback in Home component will take care of it
         setTimeout(() => { //setTimeout is for a smoother look when page loads

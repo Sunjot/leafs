@@ -1,0 +1,8 @@
+@import './App.scss';
+
+#players-wrap {
+    @include flex(column, flex-start, center);
+    position: relative;
+    margin: 20 0 20 0;
+    width: 95%;
+}

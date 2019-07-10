@@ -22,8 +22,17 @@ class Year extends React.Component<MyProps, MyState> {
         }
     }
 
+    // didMount vs didUpdate: if the year isn't hardcoded, didMount won't set the year 
+    // (it'll be undefined) and so didUpdate takes care of that once the data is finally
+    // retrieved from the backend.
+    componentDidMount = () => {
+        this.setState({
+            year: this.props.year
+        });
+    }
+
     componentDidUpdate(){
-        if(this.state.year !== this.props.year) {
+        if (this.state.year !== this.props.year && this.state.year === undefined) {
             this.setState({
                 year: this.props.year
             });
@@ -57,7 +66,7 @@ class Year extends React.Component<MyProps, MyState> {
     render() {
         return(
             <div id="year-wrap" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
-                <div id="change-year">{this.props.year}</div>
+                <div id="change-year">{this.state.year}</div>
                 {this.state.showChoices && 
                     <div id="year-choices">
                         {this.props.yearOptions.map((yr, x) => {

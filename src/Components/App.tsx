@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, RouteComp
 import Home from './Home';
 import Banner from './Banner';
 import Team from './Team';
+import Players from './Players';
 
 interface MyState {
   logoPos: string,
@@ -56,8 +57,13 @@ class App extends React.Component<RouteComponentProps, MyState> {
             render={() => <Team 
               updateLogoPos={this.updateLogoPos} 
               onLoad={this.state.onLoad} 
-              />} 
-            />
+            />} 
+          />
+          <Route 
+            exact path="/players" 
+            render={() => <Players 
+            />} 
+          />
           {/* <Route render={() => <Redirect to="/" />}/> */}
         </div>
       </Switch>
