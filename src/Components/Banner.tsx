@@ -1,17 +1,23 @@
 import * as React from 'react';
 import '../Stylesheets/Banner.scss';
+import { Link } from 'react-router-dom';
 
-type BannerProps = {
+type MyProps = {
     logoPos: string,
     nav: string
 }
 
-function Banner({logoPos, nav}: BannerProps) {
-    return (
-        <div id={nav} className="banner-wrap">
-            <img id={logoPos} src="https://i.imgur.com/Au3iKeh.png" />
-        </div>
-    );
+class Banner extends React.Component<MyProps, {}> {
+    
+    render() {
+        return(
+            <div id={this.props.nav} className="banner-wrap">
+                <Link to="/">
+                    <img id={this.props.logoPos} src="https://i.imgur.com/Au3iKeh.png" />
+                </Link>
+            </div>
+        );
+    }
 }
 
 export default Banner;

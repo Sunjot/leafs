@@ -1,22 +1,24 @@
 import * as React from 'react';
 import '../Stylesheets/App.scss';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
 import Home from './Home';
 import Banner from './Banner';
 import Team from './Team';
 
 interface MyState {
   logoPos: string,
-  nav: string
+  nav: string,
+  onLoad: boolean
 }
 
-class App extends React.Component<any, MyState> {
+class App extends React.Component<RouteComponentProps, MyState> {
 
   constructor(props: any) {
     super(props);
     this.state = {
       logoPos: 'main-logo',
-      nav: 'expand-nav'
+      nav: 'expand-nav',
+      onLoad: true // animation depends on whether page was loaded through URL or navigation
     }
   }
 
@@ -24,13 +26,15 @@ class App extends React.Component<any, MyState> {
     if(this.state.logoPos === 'main-logo') {
       this.setState({
         logoPos: 'side-logo',
-        nav: 'collapse-nav'
+        nav: 'collapse-nav',
+        onLoad: false 
       });
     }
     else {
       this.setState({
         logoPos: 'main-logo',
-        nav: 'expand-nav'
+        nav: 'expand-nav',
+        onLoad: false
       });
     }
   }
@@ -40,8 +44,20 @@ class App extends React.Component<any, MyState> {
       <Switch>
         <div id="app-wrap">
           <Banner logoPos={this.state.logoPos} nav={this.state.nav} />
-          <Route exact path="/" render={() => <Home logoPos={this.state.logoPos} updateLogoPos={this.updateLogoPos} />} />
-          <Route exact path="/team" render={() => <Team/>} />
+          <Route 
+            exact path="/" 
+            render={() => <Home 
+              logoPos={this.state.logoPos} 
+              updateLogoPos={this.updateLogoPos} 
+            />} 
+          />
+          <Route 
+            exact path="/team" 
+            render={() => <Team 
+              updateLogoPos={this.updateLogoPos} 
+              onLoad={this.state.onLoad} 
+              />} 
+            />
           {/* <Route render={() => <Redirect to="/" />}/> */}
         </div>
       </Switch>
@@ -49,4 +65,4 @@ class App extends React.Component<any, MyState> {
   }
 }
 
-export default App;
+export default withRouter(App);

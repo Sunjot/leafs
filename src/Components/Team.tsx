@@ -12,9 +12,14 @@ interface MyState {
     currentSeason: Season // object of active seasons data
 }
 
-class Team extends React.Component<{}, MyState> {
+interface MyProps {
+    updateLogoPos: Function,
+    onLoad: boolean
+}
 
-    constructor(props: any){
+class Team extends React.Component<MyProps, MyState> {
+
+    constructor(props: MyProps){
         super(props);
         this.state = {
             year: undefined,
@@ -25,6 +30,12 @@ class Team extends React.Component<{}, MyState> {
     }
 
     componentWillMount = () => {
+        // only collapse banner if page was loaded through URL; otherwise, 
+        // the navigation callback in Home component will take care of it
+        setTimeout(() => { //setTimeout is for a smoother look when page loads
+            if (this.props.onLoad === true) this.props.updateLogoPos();
+        }, 1000);
+
         fetch('/api/seasons', {
             method: 'GET'
         }).then((data) => {
@@ -65,8 +76,8 @@ class Team extends React.Component<{}, MyState> {
     render() {
 
         // Passing both down multiple components so combined into a single prop
-        let generalChartData = {dataLabel: "Win%", titleText: "Win% by Month"};
-        let metricChartData = {dataLabel: "CF%", titleText: "CF% by Month"};
+        let generalChartData = {dataLabel: "Win%", titleText: "Win%"};
+        let metricChartData = {dataLabel: "CF%", titleText: "5v5 CF%"};
 
         return(
             <div id="team-wrap">
@@ -88,6 +99,9 @@ class Team extends React.Component<{}, MyState> {
                         labels={metricChartData} 
                     />
                 </div>
+                <div id="credit">
+                    Thank you to <a target="_blank" href="https://www.naturalstattrick.com/">Natural Stat Trick</a> 
+                    &nbsp;and <a target="_blank" href="https://www.nhl.com">NHL</a> for the numbers :)</div>
             </div>
         );
     }

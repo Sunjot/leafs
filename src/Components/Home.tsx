@@ -48,13 +48,13 @@ class Home extends React.Component<MyProps, MyState> {
     let teamContent: Content = {
       title: "Team", 
       image: "https://i.imgur.com/BdeCpSR.png",
-      desc: "Up-to-date game logs."
+      desc: "Season overviews with basic and advanced metrics."
     };
 
     let playerContent: Content = {
       title: "Players", 
       image: "https://i.imgur.com/fnZup1y.png",
-      desc: "General information + individual stats."
+      desc: "Player profiles + individual stats."
     };
 
     let scheduleContent: Content = {
