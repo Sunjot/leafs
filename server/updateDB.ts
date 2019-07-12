@@ -8,7 +8,6 @@ const Schema = mongoose.Schema;
 var playerSchema = new Schema({
     name: String,
     position: String,
-    number: Number,
     height: String,
     weight: Number,
     stats: [{
@@ -52,12 +51,12 @@ async function insertPlayer(year: string) {
 
         totals.data.map(async (player: any, x: number) => {
             
-            let profileURL = "https://statsapi.web.nhl.com/api/v1/people/" + player.playerId;
+            let profileURL = "https://statsapi.web.nhl.com/api/v1/people/" + player.playerId + "?expand=person.stats&stats=yearByYear,careerRegularSeason&expand=stats.team&site=en_nhlCA";
             let profile = (await fetch(profileURL).then(res => res.json())).people[0];
+            
             Object.assign(playerDoc, {
                 name: profile.fullName,
                 position: profile.primaryPosition.name,
-                number: profile.primaryNumber,
                 height: profile.height,
                 weight: profile.weight,
                 stats: [{
@@ -79,29 +78,6 @@ async function insertPlayer(year: string) {
     } catch(error) {
         console.log(error);
     }
-
-    /*fetch(teamURL, {
-        method: 'GET'
-    }).then((res) => {
-        return res.json()
-    }).then((res) => {
-        res.data.map((player: any, x: number) => {
-            Object.assign(playerDoc, {
-                name: player.playerName, 
-                position: player.playerPositionCode,
-                weight: player.playerWeight,
-                stats: [{}]
-            });
-            Player.findOne({playerName: player.playerName}, (error, sh) => {
-                if (sh === null) {
-                    
-                }
-            });
-            
-        });
-    }).catch((error) => {
-        console.log(error);
-    });*/
 }
 
 insertPlayer("20182019");
