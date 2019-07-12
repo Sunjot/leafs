@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "ts-node server/app.ts"
+    "server": "ts-node server/app.ts",
+    "update": "ts-node server/updateDB.ts"
   },
   "author": "",
   "license": "ISC",
