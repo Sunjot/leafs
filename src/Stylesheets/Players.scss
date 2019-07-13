@@ -62,6 +62,10 @@
 
                 .leader-list {
                     @include flex(column, flex-start, flex-start);
+
+                    .leader {
+                        @include flex(row, flex-start, flex-start);
+                    }
                 }
             }
         }

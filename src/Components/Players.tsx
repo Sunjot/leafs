@@ -7,7 +7,8 @@ interface MyState {
     year: string,
     yearOptions: Array<string>,
     filter: string,
-    basics: any
+    basics: Array<any>,
+    adv: Array<any>
 }
 
 class Players extends React.Component<{}, MyState> {
@@ -18,19 +19,26 @@ class Players extends React.Component<{}, MyState> {
             year: undefined,
             yearOptions: [],
             filter: 'totals',
-            basics: [{ data: [] }, { data: [] }, { data: [] }]
+            basics: [{ data: [] }, { data: [] }, { data: [] }],
+            adv: [{ data: [] }, { data: [] }, { data: [] }]
         }
     }
 
     componentDidMount = async () => {
-        let basics = await fetch('/api/basics', {
-            method: 'POST',
-            body: JSON.stringify({year: "20182019"}),
-            headers: {"Content-Type": "application/json"}
-        });
+        let [basics, years] = await Promise.all([
+            fetch('/api/basics', {
+                method: 'POST',
+                body: JSON.stringify({year: "20182019"}),
+                headers: {"Content-Type": "application/json"}
+            }),
+            fetch('/api/years')
+        ]);
 
         let basicsList = await basics.json();
+        let yearList = await years.json();
         this.setState({
+            yearOptions: yearList,
+            year: yearList[yearList.length - 1],
             basics: basicsList
         });
     }
