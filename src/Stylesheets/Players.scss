@@ -5,4 +5,36 @@
     position: relative;
     margin: 20 0 20 0;
     width: 95%;
+
+    #leaderboard-wrap {
+        @include flex(column, flex-start, center);
+        margin: 60 0 0 0;
+        width: 100%;
+
+        #leaderboard-title {
+            font-family: 'Titillium Web';
+            font-size: 30px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        #filter {
+            @include flex(row, center, flex-start);
+
+            .filter-choice {
+                font-family: 'Questrial';
+                font-size: 18px;
+                padding: 7 10 7 10;
+                border: 1px solid #525252;
+                border-radius: 3px;
+                margin: 5px;
+                cursor: pointer;
+                transition: background-color 0.75s;
+
+                &:hover {
+                    background-color: #ebe6e6;
+                }
+            }
+        }
+    }
 }

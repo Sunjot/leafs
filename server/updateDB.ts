@@ -38,7 +38,7 @@ db.once('open', () => {
 console.log("Connection established to MongoDB Cluster");
 });
 
-async function insertPlayer(year: string) {
+async function update(year: string) {
     let basic = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&sort=[{%22property%22:%22playerName%22,%22direction%22:%22ASC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + year + "%20and%20seasonId%3C=" + year + "%20and%20teamId=10";
     let adv = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=core&isGame=false&reportName=skaterscoring&sort=[{%22property%22:%22playerName%22,%22direction%22:%22ASC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + year + "%20and%20seasonId%3C=" + year + "%20and%20teamId=10";
     let playerDoc = {};
@@ -58,21 +58,33 @@ async function insertPlayer(year: string) {
                 name: profile.fullName,
                 position: profile.primaryPosition.name,
                 height: profile.height,
-                weight: profile.weight,
-                stats: [{
-                    year: year,
-                    gp: player.gamesPlayed,
-                    goals: player.goals,
-                    g60: rates.data[x].goalsPer60Minutes,
-                    assists: player.assists,
-                    a60: rates.data[x].assistsPer60Minutes,
-                    points: player.points,
-                    p60: rates.data[x].pointsPer60Minutes,
-                    PPP: player.ppPoints
-                }]
+                weight: profile.weight
             });
             
-            Player.findOneAndUpdate({name: profile.fullName}, playerDoc, {upsert: true}, (err, p ) => {});
+
+            Player.findOneAndUpdate({name: profile.fullName}, playerDoc, {upsert: true, new: true}, (err, pl ) => {
+                let exists = false;
+                pl.get('stats').map((season: any, x:number) => {
+                    if (season.year === year) exists = true;
+                });
+
+                if (exists === false) {
+                    pl.updateOne({
+                        $push: { stats: {
+                            year: year,
+                            gp: player.gamesPlayed,
+                            goals: player.goals,
+                            g60: rates.data[x].goalsPer60Minutes,
+                            assists: player.assists,
+                            a60: rates.data[x].assistsPer60Minutes,
+                            points: player.points,
+                            p60: rates.data[x].pointsPer60Minutes,
+                            PPP: player.ppPoints
+                        }}
+                    }, null, () => {});
+                }
+                
+            });
         });
         
     } catch(error) {
@@ -80,4 +92,4 @@ async function insertPlayer(year: string) {
     }
 }
 
-insertPlayer("20182019");
+update("20162017");
