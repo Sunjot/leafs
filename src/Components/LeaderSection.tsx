@@ -20,7 +20,16 @@ class LeaderSection extends React.Component<MyProps, {}> {
                     {this.props.list.map((player: any, x: any) => {
                         return (
                             <div key={x} className="leader">
-                                {player[this.props.category]} - {player.playerName}
+                                {Number.isInteger(player[this.props.category]) === false && 
+                                    <div>
+                                        {player[this.props.category].toFixed(2)} - {player.playerName}
+                                    </div>
+                                }
+                                {Number.isInteger(player[this.props.category]) &&
+                                    <div>
+                                        {player[this.props.category]} - {player.playerName}
+                                    </div>
+                                }
                             </div>
                         );
                     })}
