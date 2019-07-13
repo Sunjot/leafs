@@ -11,10 +11,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 
 var collection: any;
 var players: any;
+var general: any;
+
 client.connect((err:string) => {
     if(err) console.log(err);
     collection = client.db("leafs").collection("seasons");
     players = client.db("leafs").collection("players");
+    general = client.db("leafs").collection("general");
 });
 
 
@@ -29,6 +32,13 @@ app.get('/api/players', (req, res) => {
     players.find({}).toArray((err: string, docs: Array<Object>) => {
         if(err) console.log(err);
         res.send(docs);
+    });
+});
+
+app.get('/api/years', (req, res) => {
+    general.find({}).toArray((err: string, docs: Array<any>) => {
+        if (err) console.log(err);
+        res.send(docs[0].years);
     });
 });
 
