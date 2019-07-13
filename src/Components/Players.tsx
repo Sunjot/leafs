@@ -1,14 +1,13 @@
 import * as React from 'react';
 import Year from './Year';
 import '../Stylesheets/Players.scss';
-import { start } from 'repl';
+import LeaderSection from './LeaderSection';
 
 interface MyState {
     year: string,
     yearOptions: Array<string>,
-    players: Array<any>,
     filter: string,
-    filtered: Array<any>
+    basics: any
 }
 
 class Players extends React.Component<{}, MyState> {
@@ -18,56 +17,27 @@ class Players extends React.Component<{}, MyState> {
         this.state = {
             year: undefined,
             yearOptions: [],
-            players: [],
             filter: 'totals',
-            filtered: []
+            basics: [{ data: [] }, { data: [] }, { data: [] }]
         }
     }
 
     componentDidMount = async () => {
-        let [players, years] = await Promise.all([
-            fetch('/api/players', { method: 'GET' }),
-            fetch('/api/years', { method: 'GET' })
-        ]);
+        let basics = await fetch('/api/basics', {
+            method: 'POST',
+            body: JSON.stringify({year: "20182019"}),
+            headers: {"Content-Type": "application/json"}
+        });
 
-        let yearList: Array<any> = await years.json();
-        let playersList: Array<any> = await players.json();
-        let currentYear: string = yearList[yearList.length - 1];
-
+        let basicsList = await basics.json();
         this.setState({
-            players: playersList,
-            yearOptions: yearList,
-            year: currentYear,
-            filtered: this.filterArray(playersList, currentYear.replace("-", ""))
+            basics: basicsList
         });
-    }
-
-    filterArray = (players: Array<any>, year: string) => {
-        let filtered: Array<any> = players.filter(player => {
-            let exist: boolean = false;
-            player.stats.map((stat: any) => {
-                if (stat.year === year) exist = true;
-            });
-            return exist
-        });
-        return filtered;
-    }
-
-    sortPlayers = (filtered: Array<any>, category: string) => {
- 
-        let sorted: Array<any> = [...filtered].sort((a, b) => {
-            let aYear = a.stats.find((s:any) => s.year === this.state.year.replace("-", ""));
-            let bYear = b.stats.find((s:any) => s.year === this.state.year.replace("-", ""));
-            return  bYear[category] - aYear[category];
-        });
- 
-        return sorted;
     }
 
     changeYear = (e:any) => {
         this.setState({
-            year: e.target.innerHTML,
-            filtered: this.filterArray(this.state.players, e.target.innerHTML.replace("-", ""))
+            year: e.target.innerHTML
         });
     }
 
@@ -78,13 +48,6 @@ class Players extends React.Component<{}, MyState> {
     }
 
     render() {
-
-        let goals, assists, points = [];
-        if (this.state.filter === 'totals') {
-            goals = this.sortPlayers(this.state.filtered, "goals");
-            assists = this.sortPlayers(this.state.filtered, "assists");
-            points = this.sortPlayers(this.state.filtered, "points");
-        }
 
         return(
             <div id="players-wrap">
@@ -100,16 +63,9 @@ class Players extends React.Component<{}, MyState> {
                         <div onClick={(e) => this.setFilter(e)} id="rates" className="filter-choice">Rates</div>
                     </div>
                     <div id="leaders">
-                        <div className="leader-section">
-                           {goals.map((player, x) => {
-                               return (
-                                <div>{player.name}</div>
-                               );
-                           })}
-                        </div>
-                        <div className="leader-section"></div>
-                        <div className="leader-section"></div>
-                        <div className="leader-section"></div>
+                        <LeaderSection title="Goals" list={this.state.basics[0].data} category="goals" />
+                        <LeaderSection title="Assists" list={this.state.basics[1].data} category="assists" />
+                        <LeaderSection title="Points" list={this.state.basics[2].data} category="points" />
                     </div>
                 </div>
             </div>

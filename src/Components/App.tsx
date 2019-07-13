@@ -42,31 +42,31 @@ class App extends React.Component<RouteComponentProps, MyState> {
 
   render() {
     return (
-      <Switch>
-        <div id="app-wrap">
-          <Banner logoPos={this.state.logoPos} nav={this.state.nav} />
-          <Route 
-            exact path="/" 
-            render={() => <Home 
-              logoPos={this.state.logoPos} 
-              updateLogoPos={this.updateLogoPos} 
-            />} 
-          />
-          <Route 
-            exact path="/team" 
-            render={() => <Team 
-              updateLogoPos={this.updateLogoPos} 
-              onLoad={this.state.onLoad} 
-            />} 
-          />
-          <Route 
-            exact path="/players" 
-            render={() => <Players 
-            />} 
-          />
-          {/* <Route render={() => <Redirect to="/" />}/> */}
-        </div>
-      </Switch>
+      <div id="app-wrap">
+        <Banner logoPos={this.state.logoPos} nav={this.state.nav} />
+        <Switch>
+            <Route 
+              exact path="/" 
+              render={() => <Home 
+                logoPos={this.state.logoPos} 
+                updateLogoPos={this.updateLogoPos} 
+              />} 
+            />
+            <Route 
+              exact path="/team" 
+              render={() => <Team 
+                updateLogoPos={this.updateLogoPos} 
+                onLoad={this.state.onLoad} 
+              />} 
+            />
+            <Route 
+              exact path="/players" 
+              render={() => <Players 
+              />} 
+            />
+            {/* <Route render={() => <Redirect to="/" />}/> */}
+        </Switch>
+      </div>
     )
   }
 }

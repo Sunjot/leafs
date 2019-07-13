@@ -36,5 +36,34 @@
                 }
             }
         }
+
+        #leaders {
+            @include flex(row, center, flex-start);
+            flex-wrap: wrap;
+
+            .leader-section {
+                @include flex(column, flex-start, flex-start);
+                flex-wrap: wrap;
+                border: 1px solid #525252;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px;
+                width: 300px;
+                height: 500px;
+                
+                .leader-title {
+                    font-family: 'Titillium Web';
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                    text-transform: uppercase;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .leader-list {
+                    @include flex(column, flex-start, flex-start);
+                }
+            }
+        }
     }
 }

@@ -1,9 +1,12 @@
 import express = require('express');
 import dotenv = require('dotenv');
-import fetch = require('node-fetch');
+import bodyParser = require('body-parser')
+import fetch from 'node-fetch';
 const MongoClient = require('mongodb').MongoClient;
 
 const app = express();
+app.use(bodyParser.json());
+
 dotenv.config();
 
 const uri = "mongodb+srv://sunjotsingh:" + process.env.MDBPASS + "@tvtracker-bykmv.mongodb.net/test?retryWrites=true&w=majority";
@@ -41,5 +44,17 @@ app.get('/api/years', (req, res) => {
         res.send(docs[0].years);
     });
 });
+
+app.post('/api/basics', async (req, res) => {
+    let sortGoals = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&sort=[{%22property%22:%22goals%22,%22direction%22:%22DESC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + req.body.year + "%20and%20seasonId%3C=" + req.body.year + "%20and%20teamId=10"
+    let sortAssists = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&sort=[{%22property%22:%22assists%22,%22direction%22:%22DESC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + req.body.year + "%20and%20seasonId%3C=" + req.body.year + "%20and%20teamId=10"
+    let sortPoints = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&sort=[{%22property%22:%22points%22,%22direction%22:%22DESC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + req.body.year + "%20and%20seasonId%3C=" + req.body.year + "%20and%20teamId=10"
+    
+    let [goals, assists, points] = await Promise.all([fetch(sortGoals), fetch(sortAssists), fetch(sortPoints)]);
+    let allSorted = [await goals.json(), await assists.json(), await points.json()];
+    console.log(allSorted);
+
+    res.send(allSorted);
+})
 
 app.listen(3000, () => console.log(`Listening on 3000`));
