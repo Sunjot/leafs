@@ -26,9 +26,9 @@ class Players extends React.Component<{}, MyState> {
 
     componentDidMount = async () => {
         let [basics, years] = await Promise.all([
-            fetch('/api/basics', {
+            fetch('/api/players', {
                 method: 'POST',
-                body: JSON.stringify({year: "20182019"}),
+                body: JSON.stringify({ cats: ["goals", "assists", "points"], type: "basic"}),
                 headers: {"Content-Type": "application/json"}
             }),
             fetch('/api/years')
