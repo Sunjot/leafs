@@ -1,5 +1,6 @@
 import * as React from 'react';
 import '../Stylesheets/LeaderSection.scss';
+import LeaderList from './LeaderList';
 
 interface MyProps {
     title: string,
@@ -24,37 +25,12 @@ class LeaderSection extends React.Component<MyProps, MyState> {
         return(
             <div className="leader-section">
                 <div className="leader-title">{this.props.title}</div>
+                <div className="leader-divider"></div>
                 {this.state.cats.includes(this.props.category) && 
-                    <div className="leader-list">
-                        { this.props.list.map((player: any, x: any) => {
-                            return(
-                                <div className="listing" id={x === 4? "divider" : ""}>
-                                    <div className="name" id={x<5? "large-name": "small-name"}>
-                                        {player.playerName}
-                                    </div>
-                                    <div className="number" id={x<5? "large-stat": "small-stat"}>
-                                        {player[this.props.category]}
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <LeaderList list={this.props.list} basic={true} category={this.props.category} />
                 } 
                 {this.state.cats.includes(this.props.category) === false &&
-                    <div className="leader-list">
-                        { this.props.list.map((player: any, x: any) => {
-                            return(
-                                <div className="listing" id={x === 4? "divider" : ""}>
-                                    <div className="name" id={x<5? "large-name": "small-name"}>
-                                        {player.playerName}
-                                    </div>
-                                    <div className="number" id={x<5? "large-stat": "small-stat"}>
-                                        {player[this.props.category].toFixed(2)}
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <LeaderList list={this.props.list} basic={false} category={this.props.category} />
                 }
             </div>
         );

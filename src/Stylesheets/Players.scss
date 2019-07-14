@@ -33,9 +33,12 @@
                 transition: border-color 0.75s;
 
                 &:hover {
-
                     border-color: #525252;
                 }
+            }
+
+            .active {
+                border-color: #525252 !important;
             }
         }
 

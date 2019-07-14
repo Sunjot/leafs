@@ -8,23 +8,38 @@ interface MyState {
     yearOptions: Array<string>,
     filter: string,
     basics: Array<any>,
-    adv: Array<any>
+    adv: Array<any>,
+    totals: string,
+    rates: string
 }
 
-class Players extends React.Component<{}, MyState> {
+interface MyProps {
+    updateLogoPos: Function,
+    onLoad: boolean
+}
 
-    constructor(props: {}) {
+class Players extends React.Component<MyProps, MyState> {
+
+    constructor(props: MyProps) {
         super(props);
         this.state = {
             year: undefined,
             yearOptions: [],
             filter: 'totals',
             basics: [{ data: [] }, { data: [] }, { data: [] }],
-            adv: [{ data: [] }, { data: [] }, { data: [] }]
+            adv: [{ data: [] }, { data: [] }, { data: [] }],
+            totals: "totals active",
+            rates: "rates"
         }
     }
 
     componentDidMount = async () => {
+        // only collapse banner if page was loaded through URL; otherwise, 
+        // the navigation callback in Home component will take care of it
+        setTimeout(() => { //setTimeout is for a smoother look when page loads
+            if (this.props.onLoad === true) this.props.updateLogoPos();
+        }, 1000);
+
         let [basics, years] = await Promise.all([
             fetch('/api/players', {
                 method: 'POST',
@@ -97,8 +112,14 @@ class Players extends React.Component<{}, MyState> {
                 <div id="leaderboard-wrap">
                     <div id="leaderboard-title">Leaderboard</div>
                     <div id="filter">
-                        <div onClick={(e) => this.setFilter(e)} id="totals" className="filter-choice">Totals</div>
-                        <div onClick={(e) => this.setFilter(e)} id="rates" className="filter-choice">Rates</div>
+                        <div onClick={(e) => this.setFilter(e)} 
+                            className={this.state.filter === "totals"? "filter-choice active": "filter-choice"} 
+                            id="totals">Totals
+                        </div>
+                        <div onClick={(e) => this.setFilter(e)} 
+                            className={this.state.filter === "rates"? "filter-choice active": "filter-choice"} 
+                            id="rates">Rates
+                        </div>
                     </div>
                     {this.state.filter === 'totals' &&
                         <div id="leaders">

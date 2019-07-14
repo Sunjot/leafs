@@ -1,7 +1,7 @@
 @import './App.scss';
 
 .leader-section {
-    @include flex(column, flex-start, flex-start);
+    @include flex(column, flex-start, center);
     border: 1px solid #c9bfbf;
     border-radius: 5px;
     padding: 10px;
@@ -17,51 +17,10 @@
         text-align: center;
     }
 
-    .leader-list {
-        @include flex(column, flex-start, flex-start);
-        width: 100%;
-
-        .listing {
-            @include flex(row, space-between, center);
-            width: 100%;
-            transition: background-color 0.3s;
-            border-radius: 3px;
-
-            &:hover {
-                background-color: #f0eded;
-            }
-
-            .number {
-                font-family: 'Squada One';
-            }
-
-            .name {
-                font-family: 'Questrial';
-                margin-left: 5px;
-            }
-
-            #large-stat {
-                font-size: 30px;
-            }
-
-            #small-stat {
-                font-size: 20px;
-            }
-
-            #large-name {
-                font-size: 18px;
-            }
-
-            #small-name {
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
-        }
-
-        #divider {
-            border-bottom: 1px solid #c2c2c2;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-        }
+    .leader-divider {
+        height: 5px;
+        width: 30px;
+        background-color: #d9cccc;
+        margin: 5 0 5 0;
     }
 }

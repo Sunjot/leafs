@@ -62,6 +62,8 @@ class App extends React.Component<RouteComponentProps, MyState> {
             <Route 
               exact path="/players" 
               render={() => <Players 
+                updateLogoPos={this.updateLogoPos} 
+                onLoad={this.state.onLoad} 
               />} 
             />
             {/* <Route render={() => <Redirect to="/" />}/> */}
