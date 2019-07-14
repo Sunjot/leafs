@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../Stylesheets/LeaderSection.scss';
 
 interface MyProps {
     title: string,
@@ -6,34 +7,55 @@ interface MyProps {
     category: string
 }
 
-class LeaderSection extends React.Component<MyProps, {}> {
+interface MyState {
+    cats: Array<string>
+}
+
+class LeaderSection extends React.Component<MyProps, MyState> {
 
     constructor(props: MyProps) {
         super(props);
+        this.state = {
+            cats: ["goals", "assists", "points"]
+        }
     }
 
     render() {
         return(
             <div className="leader-section">
                 <div className="leader-title">{this.props.title}</div>
-                <div className="leader-list">
-                    {this.props.list.map((player: any, x: any) => {
-                        return (
-                            <div key={x} className="leader">
-                                {Number.isInteger(player[this.props.category]) === false && 
-                                    <div>
-                                        {player[this.props.category].toFixed(2)} - {player.playerName}
+                {this.state.cats.includes(this.props.category) && 
+                    <div className="leader-list">
+                        { this.props.list.map((player: any, x: any) => {
+                            return(
+                                <div className="listing" id={x === 4? "divider" : ""}>
+                                    <div className="name" id={x<5? "large-name": "small-name"}>
+                                        {player.playerName}
                                     </div>
-                                }
-                                {Number.isInteger(player[this.props.category]) &&
-                                    <div>
-                                        {player[this.props.category]} - {player.playerName}
+                                    <div className="number" id={x<5? "large-stat": "small-stat"}>
+                                        {player[this.props.category]}
                                     </div>
-                                }
-                            </div>
-                        );
-                    })}
-                </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                } 
+                {this.state.cats.includes(this.props.category) === false &&
+                    <div className="leader-list">
+                        { this.props.list.map((player: any, x: any) => {
+                            return(
+                                <div className="listing" id={x === 4? "divider" : ""}>
+                                    <div className="name" id={x<5? "large-name": "small-name"}>
+                                        {player.playerName}
+                                    </div>
+                                    <div className="number" id={x<5? "large-stat": "small-stat"}>
+                                        {player[this.props.category].toFixed(2)}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                }
             </div>
         );
     }

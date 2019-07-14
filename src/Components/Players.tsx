@@ -62,8 +62,6 @@ class Players extends React.Component<{}, MyState> {
             year: year,
             basics: await basics.json(),
             adv: await adv.json()
-        }, () => {
-            console.log(this.state.basics);
         });
 
     }

@@ -20,19 +20,21 @@
 
         #filter {
             @include flex(row, center, flex-start);
+            margin-bottom: 15px;
 
             .filter-choice {
                 font-family: 'Questrial';
                 font-size: 18px;
                 padding: 7 10 7 10;
-                border: 1px solid #525252;
+                border: 1px solid #c9bfbf;
                 border-radius: 3px;
                 margin: 5px;
                 cursor: pointer;
-                transition: background-color 0.75s;
+                transition: border-color 0.75s;
 
                 &:hover {
-                    background-color: #ebe6e6;
+
+                    border-color: #525252;
                 }
             }
         }
@@ -40,34 +42,6 @@
         #leaders {
             @include flex(row, center, flex-start);
             flex-wrap: wrap;
-
-            .leader-section {
-                @include flex(column, flex-start, flex-start);
-                flex-wrap: wrap;
-                border: 1px solid #525252;
-                border-radius: 5px;
-                padding: 10px;
-                margin: 10px;
-                width: 300px;
-                height: 500px;
-                
-                .leader-title {
-                    font-family: 'Titillium Web';
-                    font-size: 20px;
-                    margin-bottom: 5px;
-                    text-transform: uppercase;
-                    width: 100%;
-                    text-align: center;
-                }
-
-                .leader-list {
-                    @include flex(column, flex-start, flex-start);
-
-                    .leader {
-                        @include flex(row, flex-start, flex-start);
-                    }
-                }
-            }
         }
     }
 }
