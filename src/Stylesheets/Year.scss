@@ -10,7 +10,7 @@
         font-family: 'Questrial';
         font-size: 17px;
         border: 1px solid #8d8d8d;
-        padding: 9px;
+        padding: 9;
         border-radius: 5px;
         cursor: pointer;
     }
@@ -22,10 +22,10 @@
         border-radius: 5px;
         margin-top: 3px;
         overflow: hidden;
+        animation: fadeinanddown 0.8s forwards;
       
         #other-year {
-            padding: 9px;
-            border-bottom: 1px solid #8d8d8d;
+            padding: 12 9 12 9;
             cursor: pointer;
             background-color: #faf6f0;
             transition: background-color 0.5s;
@@ -34,5 +34,15 @@
                 background-color: #f0ece6;
             }
         }
+    }
+}
+
+@keyframes fadeinanddown {
+    from {
+        opacity: 0;
+        transform: translateY(-3px);
+    } to {
+        opacity: 1;
+        transform: translateY(2px)
     }
 }

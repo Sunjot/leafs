@@ -43,10 +43,29 @@ class Players extends React.Component<{}, MyState> {
         });
     }
 
-    changeYear = (e:any) => {
+    changeYear = async (e:any) => {
+        let year = e.target.innerHTML;
+        let [basics, adv] = await Promise.all([
+            fetch('/api/players', {
+                method: 'POST', 
+                body: JSON.stringify({ cats: ["goals", "assists", "points"], type: "basic", report: "summary", year: year}), 
+                headers: {"Content-Type": "application/json"}
+            }),
+            fetch('/api/players', {
+                method: 'POST', 
+                body: JSON.stringify({ cats: ["goalsPer60Minutes", "assistsPer60Minutes", "pointsPer60Minutes"], type: "core", report: "scoring", year: year}), 
+                headers: {"Content-Type": "application/json"}
+            })
+        ]);
+
         this.setState({
-            year: e.target.innerHTML
+            year: year,
+            basics: await basics.json(),
+            adv: await adv.json()
+        }, () => {
+            console.log(this.state.basics);
         });
+
     }
 
     setFilter = async (e: any) => {

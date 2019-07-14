@@ -45,8 +45,11 @@ function getYears(req: any, res: any, next: any) {
 
 app.post('/api/players', getYears, async (req, res) => {
 
-    let yearShort = res.locals.years[res.locals.years.length - 1].replace("-", "");
+    // When calling the route as a result of an action (like changing the year itself on the page), 
+    // the year will get passed as part of the body and so that will be used instead
+    let yearShort = req.body.year? req.body.year.replace("-", "") : res.locals.years[res.locals.years.length - 1].replace("-", "");
     let URLs: Array<string> = [];
+    
     req.body.cats.map((cat: string) => {
         let URL = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=" + req.body.type + "&isGame=false&reportName=skater" + req.body.report + "&sort=[{%22property%22:%22" + cat + "%22,%22direction%22:%22DESC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + yearShort + "%20and%20seasonId%3C=" + yearShort + "%20and%20teamId=10";
         URLs.push(URL);
