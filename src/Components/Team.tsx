@@ -33,7 +33,7 @@ class Team extends React.Component<MyProps, MyState> {
         // only collapse banner if page was loaded through URL; otherwise, 
         // the navigation callback in Home component will take care of it
         setTimeout(() => { //setTimeout is for a smoother look when page loads
-            if (this.props.onLoad === true) this.props.updateLogoPos();
+            if (this.props.onLoad === true) this.props.updateLogoPos("team");
         }, 1000);
 
         fetch('/api/seasons', {

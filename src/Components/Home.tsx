@@ -29,7 +29,7 @@ class Home extends React.Component<MyProps, MyState> {
   }
 
   navClick = (r: string) => {
-    this.props.updateLogoPos();
+    this.props.updateLogoPos(r.replace("/", ""));
     this.setState({
       fade: 'fadeouthome'
     });

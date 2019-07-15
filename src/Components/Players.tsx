@@ -37,7 +37,7 @@ class Players extends React.Component<MyProps, MyState> {
         // only collapse banner if page was loaded through URL; otherwise, 
         // the navigation callback in Home component will take care of it
         setTimeout(() => { //setTimeout is for a smoother look when page loads
-            if (this.props.onLoad === true) this.props.updateLogoPos();
+            if (this.props.onLoad === true) this.props.updateLogoPos("players");
         }, 1000);
 
         let [basics, years] = await Promise.all([
@@ -60,30 +60,31 @@ class Players extends React.Component<MyProps, MyState> {
 
     changeYear = async (e:any) => {
         let year = e.target.innerHTML;
-        let [basics, adv] = await Promise.all([
-            fetch('/api/players', {
-                method: 'POST', 
-                body: JSON.stringify({ cats: ["goals", "assists", "points"], type: "basic", report: "summary", year: year}), 
-                headers: {"Content-Type": "application/json"}
-            }),
-            fetch('/api/players', {
-                method: 'POST', 
-                body: JSON.stringify({ cats: ["goalsPer60Minutes", "assistsPer60Minutes", "pointsPer60Minutes"], type: "core", report: "scoring", year: year}), 
-                headers: {"Content-Type": "application/json"}
-            })
-        ]);
+        if (year !== this.state.year) {
+            let [basics, adv] = await Promise.all([
+                fetch('/api/players', {
+                    method: 'POST', 
+                    body: JSON.stringify({ cats: ["goals", "assists", "points"], type: "basic", report: "summary", year: year}), 
+                    headers: {"Content-Type": "application/json"}
+                }),
+                fetch('/api/players', {
+                    method: 'POST', 
+                    body: JSON.stringify({ cats: ["goalsPer60Minutes", "assistsPer60Minutes", "pointsPer60Minutes"], type: "core", report: "scoring", year: year}), 
+                    headers: {"Content-Type": "application/json"}
+                })
+            ]);
 
-        this.setState({
-            year: year,
-            basics: await basics.json(),
-            adv: await adv.json()
-        });
+            this.setState({
+                year: year,
+                basics: await basics.json(),
+                adv: await adv.json()
+            });
+        }
 
     }
 
     setFilter = async (e: any) => {
         let id = e.target.id;
-
         this.setState({
             filter: id
         });

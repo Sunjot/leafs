@@ -9,7 +9,9 @@ import Players from './Players';
 interface MyState {
   logoPos: string,
   nav: string,
-  onLoad: boolean
+  onLoad: boolean,
+  showLinks: boolean,
+  route: string
 }
 
 class App extends React.Component<RouteComponentProps, MyState> {
@@ -19,23 +21,35 @@ class App extends React.Component<RouteComponentProps, MyState> {
     this.state = {
       logoPos: 'main-logo',
       nav: 'expand-nav',
-      onLoad: true // animation depends on whether page was loaded through URL or navigation
+      onLoad: true, // animation depends on whether page was loaded through URL or navigation
+      showLinks: false,
+      route: ""
     }
   }
 
-  updateLogoPos = () => {
+  updateNavActive = (route: string) => {
+    this.setState({
+      route: route
+    });
+  }
+
+  updateLogoPos = (route = "") => {
     if(this.state.logoPos === 'main-logo') {
       this.setState({
         logoPos: 'side-logo',
         nav: 'collapse-nav',
-        onLoad: false 
+        onLoad: false,
+        showLinks: true,
+        route: route
       });
     }
     else {
       this.setState({
         logoPos: 'main-logo',
         nav: 'expand-nav',
-        onLoad: false
+        onLoad: false,
+        showLinks: false,
+        route: route
       });
     }
   }
@@ -43,7 +57,13 @@ class App extends React.Component<RouteComponentProps, MyState> {
   render() {
     return (
       <div id="app-wrap">
-        <Banner logoPos={this.state.logoPos} nav={this.state.nav} />
+        <Banner 
+          logoPos={this.state.logoPos} 
+          nav={this.state.nav} 
+          showLinks={this.state.showLinks} 
+          route={this.state.route}
+          updateNavActive={this.updateNavActive}
+        />
         <Switch>
             <Route 
               exact path="/" 
