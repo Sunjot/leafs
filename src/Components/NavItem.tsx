@@ -9,6 +9,13 @@ interface NavProps {
 function NavItem({navClick, content}: NavProps) {
     
     return(
+        <div onClick={() => navClick()} id={content.title} className="navitem-wrap">
+            <div className="title-text">{content.title}</div>
+            <img className="navimage" src={content.image}/>
+        </div>
+    );
+
+    /*return(
         <div onClick={() => navClick()} id="navitem-wrap">
             <img id="navimage" src={content.image}/>
             <div id="info-wrap">
@@ -16,7 +23,7 @@ function NavItem({navClick, content}: NavProps) {
                 <div id="desc">{content.desc}</div>
             </div>
         </div>
-    )
+    )*/
 }
 
 export default NavItem;

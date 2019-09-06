@@ -54,7 +54,7 @@ class Home extends React.Component<MyProps, MyState> {
     let playerContent: Content = {
       title: "Players", 
       image: "https://i.imgur.com/fnZup1y.png",
-      desc: "Player profiles + individual stats."
+      desc: "Stats leaderboard with totals and rates."
     };
 
     let scheduleContent: Content = {
@@ -68,7 +68,7 @@ class Home extends React.Component<MyProps, MyState> {
         <div id="nav-wrap">
           <NavItem navClick={() => this.navClick("/team")} content={teamContent} />
           <NavItem navClick={() => this.navClick("/players")} content={playerContent} />
-          <NavItem navClick={this.navClick} content={scheduleContent} />
+          {/* <NavItem navClick={this.navClick} content={scheduleContent} /> */}
         </div>
       </div>
     )

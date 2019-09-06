@@ -26,7 +26,7 @@ class Banner extends React.Component<MyProps, {}> {
                     <div id="nav-links">
                         <Link to="/team" onClick={() => this.props.updateNavActive("team")} className={this.props.route === "team"? "nav active" : "nav"}>Team</Link>
                         <Link to="/players" onClick={() => this.props.updateNavActive("players")} className={this.props.route === "players"? "nav active" : "nav"}>Players</Link>
-                        <Link to="/schedule" onClick={() => this.props.updateNavActive("schedule")} className={this.props.route === "schedule"? "nav active" : "nav"}>Schedule</Link>
+                        {/* <Link to="/schedule" onClick={() => this.props.updateNavActive("schedule")} className={this.props.route === "schedule"? "nav active" : "nav"}>Schedule</Link> */}
                     </div>
                 }
             </div>
