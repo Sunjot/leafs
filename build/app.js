@@ -62,5 +62,5 @@ app.post('/api/players', getYears, (req, res) => __awaiter(void 0, void 0, void 
     let allSorted = [yield goals.json(), yield assists.json(), yield points.json()];
     res.send(allSorted);
 }));
-app.listen(3000, () => console.log(`Listening on 3000`));
+app.listen(3005, () => console.log(`Listening on 3005`));
 //# sourceMappingURL=app.js.map
