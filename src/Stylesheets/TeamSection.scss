@@ -5,9 +5,20 @@
 
     #team-section-title {
         font-family: 'Titillium Web';
-        font-size: 30px;
         margin-bottom: 20px;
         text-transform: uppercase;
+
+        @include xs {
+            font-size: 25px;
+        }
+        
+        @include sm {
+            font-size: 25px;
+        }
+        
+        @include md {
+            font-size: 30px;
+        }
     }
 
     #team-section-stats {
@@ -16,22 +27,83 @@
 
         .stat-box {
             font-family: 'Questrial';                
-            padding: 15px;
             border: 1px solid #8d8d8d;
             border-radius: 5px;
             margin: 5px;
             text-align: center;
-            width: 70px;
+
+            @include xs {
+                padding: 5px;
+                width: 50px;
+            }
+            
+            @include sm {
+                padding: 5px;
+                width: 50px;
+            }
+            
+            @include md {
+                padding: 10px;
+                width: 60px;
+            }
+            
+            @include lg {
+                padding: 15px;
+                width: 70px;
+            }
+            
+            @include xl {
+                padding: 15px;
+                width: 70px;
+            }
             
             .stat-title {
-                font-size: 14px;
                 margin: 5px;
                 text-transform: uppercase;
+
+                @include xs {
+                    font-size: 12px;
+                }
+                
+                @include sm {
+                    font-size: 12px;
+                }
+                
+                @include md {
+                    font-size: 13px;
+                }
+                
+                @include lg {
+                    font-size: 14px;
+                }
+                
+                @include xl {
+                    font-size: 14px;
+                }
             }
 
             .stat-number {
-                font-size: 25px;
                 margin: 5px;
+
+                @include xs {
+                    font-size: 18px;
+                }
+                
+                @include sm {
+                    font-size: 18px;
+                }
+                
+                @include md {
+                    font-size: 20px;
+                }
+                
+                @include lg {
+                    font-size: 25px;
+                }
+                
+                @include xl {
+                    font-size: 25px;
+                }
             }
         }
     }

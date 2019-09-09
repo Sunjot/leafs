@@ -15,9 +15,20 @@
 
         #leaderboard-title {
             font-family: 'Titillium Web';
-            font-size: 30px;
             margin-bottom: 10px;
             text-transform: uppercase;
+
+            @include xs {
+                font-size: 25px;
+            }
+            
+            @include sm {
+                font-size: 25px;
+            }
+            
+            @include md {
+                font-size: 30px;
+            }
         }
 
         #filter {
@@ -26,13 +37,26 @@
 
             .filter-choice {
                 font-family: 'Questrial';
-                font-size: 18px;
-                padding: 7 10 7 10;
                 border: 1px solid #c9bfbf;
                 border-radius: 3px;
                 margin: 5px;
                 cursor: pointer;
                 transition: border-color 0.75s;
+
+                @include xs {
+                    font-size: 15px;
+                    padding: 5 8 5 8;
+                }
+                
+                @include sm {
+                    font-size: 15px;
+                    padding: 5 8 5 8;
+                }
+                
+                @include md {
+                    font-size: 18px;
+                    padding: 7 10 7 10;
+                }
 
                 &:hover {
                     border-color: #525252;

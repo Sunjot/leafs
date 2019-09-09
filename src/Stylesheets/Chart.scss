@@ -2,4 +2,24 @@
 
 #team-section-chart {
     margin: 20 0 20 0;
+
+    @include xs {
+        width: 300px;
+    }
+    
+    @include sm {
+        width: 380px;
+    }
+    
+    @include md {
+        width: 550px;
+    }
+    
+    @include lg {
+        width: 600px;
+    }
+    
+    @include xl {
+        width: 600px;
+    }
 }

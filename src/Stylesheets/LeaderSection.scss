@@ -6,8 +6,15 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    width: 300px;
     min-height: 500px;
+
+    @include xs {
+        width: 280px;
+    }
+    
+    @include sm {
+        width: 300px;
+    }
     
     .leader-title {
         font-family: 'Titillium Web';

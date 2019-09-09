@@ -24,20 +24,64 @@
         }
 
         #large-stat {
-            font-size: 30px;
+
+            @include xs {
+                font-size: 25px;
+            }
+            
+            @include sm {
+                font-size: 25px;
+            }
+            
+            @include md {
+                font-size: 30px;
+            }
         }
 
         #small-stat {
-            font-size: 20px;
+
+            @include xs {
+                font-size: 18px;
+            }
+            
+            @include sm {
+                font-size: 18px;
+            }
+            
+            @include md {
+                font-size: 20px;
+            }
         }
 
         #large-name {
-            font-size: 18px;
+
+            @include xs {
+                font-size: 16px;
+            }
+            
+            @include sm {
+                font-size: 16px;
+            }
+            
+            @include md {
+                font-size: 18px;
+            }
         }
 
         #small-name {
-            font-size: 16px;
             margin-bottom: 10px;
+
+            @include xs {
+                font-size: 14px;
+            }
+            
+            @include sm {
+                font-size: 14px;
+            }
+            
+            @include md {
+                font-size: 16px;
+            }
         }
     }
 
