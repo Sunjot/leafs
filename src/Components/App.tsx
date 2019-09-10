@@ -11,7 +11,8 @@ interface MyState {
   nav: string,
   onLoad: boolean,
   showLinks: boolean,
-  route: string
+  route: string,
+  theme: string
 }
 
 class App extends React.Component<RouteComponentProps, MyState> {
@@ -23,7 +24,8 @@ class App extends React.Component<RouteComponentProps, MyState> {
       nav: 'expand-nav',
       onLoad: true, // animation depends on whether page was loaded through URL or navigation
       showLinks: false,
-      route: ""
+      route: "",
+      theme: "light",
     }
   }
 
@@ -54,9 +56,19 @@ class App extends React.Component<RouteComponentProps, MyState> {
     }
   }
 
+  changeTheme = () => {
+    this.state.theme === "light" ? document.body.dataset.theme = "dark" : 
+      document.body.dataset.theme = "light";
+    
+    this.setState({ theme: document.body.dataset.theme });
+  }
+
   render() {
     return (
       <div id="app-wrap">
+        <div id="color-switch" onClick={this.changeTheme}>
+
+        </div>
         <Banner 
           logoPos={this.state.logoPos} 
           nav={this.state.nav} 

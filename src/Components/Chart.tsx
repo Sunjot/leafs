@@ -11,7 +11,7 @@ function Chart({data, labels}: ChartI) {
             label: labels.dataLabel,
             data: data,
             fill: false,
-            borderColor: "rgb(23, 102, 130)",
+            borderColor: document.body.dataset.theme === "dark"? "rgb(250, 246, 240)" : "rgb(23, 102, 130)",
             borderWidth: 2,
             pointBackgroundColor: "rgb(23, 102, 130)"
         }]
@@ -22,12 +22,30 @@ function Chart({data, labels}: ChartI) {
             display: true,
             text: labels.titleText,
             fontSize: 16,
-            fontColor: 'black',
+            fontColor: document.body.dataset.theme === "dark" ? "#faf6f0": "#4a4a4a",
             fontFamily: 'Questrial',
             padding: 15
         },
         legend: {
             display: false
+        },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    color: document.body.dataset.theme === "dark" ? "#707070": "#d1d1d1"
+                },
+                ticks: {
+                    fontColor: document.body.dataset.theme === "dark" ? "#faf6f0": "#4a4a4a"
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    color: document.body.dataset.theme === "dark" ? "#707070": "#d1d1d1"
+                },
+                ticks: {
+                    fontColor: document.body.dataset.theme === "dark" ? "#faf6f0": "#4a4a4a"
+                }
+            }]
         }
     }
 

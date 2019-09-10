@@ -44,7 +44,7 @@
             font-size: 20px;
             cursor: pointer;
             text-decoration: none;
-            color: #4a4a4a;
+            color: var(--main-text-color);
             transition: transform 0.4s, color 0.3s;
             text-transform: uppercase;
 
@@ -55,7 +55,7 @@
         }
 
         .active {
-            color: black;
+            color: var(--banner-active-color);
         }
     }
 }

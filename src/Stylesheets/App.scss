@@ -1,58 +1,78 @@
 @mixin flex($direction, $justify, $align) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: $justify;
-    align-items: $align;
-  }
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
   
-  $xs-width: 320px;
-  $sm-width: 400px;
-  $md-width: 600px;
-  $lg-width: 900px;
-  $xl-width: 1200px;
-  
-  @mixin xs {
-    @media (min-width: #{$xs-width}) {
-      @content;
-    }
-  }
-  
-  @mixin sm {
-    @media (min-width: #{$sm-width}) {
-      @content;
-    }
-  }
-  
-  @mixin md {
-    @media (min-width: #{$md-width}) {
-      @content;
-    }
-  }
-  
-  @mixin lg {
-    @media (min-width: #{$lg-width}) {
-      @content;
-    }
-  }
+$xs-width: 320px;
+$sm-width: 400px;
+$md-width: 600px;
+$lg-width: 900px;
+$xl-width: 1200px;
 
-  @mixin xl {
-    @media (min-width: #{$xl-width}) {
-      @content;
-    }
+@mixin xs {
+  @media (min-width: #{$xs-width}) {
+    @content;
   }
-  
-  @import url('https://fonts.googleapis.com/css?family=Quicksand|Questrial|Titillium+Web:700|Squada+One');  
+}
 
-html {
-  background-color: #faf6f0;
-  color: #4a4a4a;
+@mixin sm {
+  @media (min-width: #{$sm-width}) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: #{$md-width}) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: #{$lg-width}) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: #{$xl-width}) {
+    @content;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css?family=Quicksand|Questrial|Titillium+Web:700|Squada+One');  
+
+
+:root {
+  --bg-color: #faf6f0;
+  --main-text-color: #4a4a4a;
+  --banner-active-color: black;
 }
 
 body {
     margin: 0;
+    background-color: var(--bg-color);
+    color: var(--main-text-color);
 }
 
 #app-wrap {
   width: 100%;
   @include flex(column, flex-start, center);
+}
+
+[data-theme="dark"] {
+  --bg-color: #262626;
+  --main-text-color: #faf6f0;
+  --banner-active-color: #8cc8d4;
+}
+
+#color-switch {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  cursor: pointer;
 }
