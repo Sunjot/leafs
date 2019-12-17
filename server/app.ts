@@ -51,7 +51,8 @@ app.post('/api/players', getYears, async (req, res) => {
     let URLs: Array<string> = [];
     
     req.body.cats.map((cat: string) => {
-        let URL = "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=" + req.body.type + "&isGame=false&reportName=skater" + req.body.report + "&sort=[{%22property%22:%22" + cat + "%22,%22direction%22:%22DESC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + yearShort + "%20and%20seasonId%3C=" + yearShort + "%20and%20teamId=10";
+        /* let URL = "https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=false&sort=[{%22property%22:%22" + cat + "%22,%22direction%22:%22DESC%22}]&factCayenneExp=gamesPlayed%3E=40&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=" + yearShort + "%20and%20seasonId%3C=" + yearShort + "%20and%20teamId=10"; */
+        let URL = "https://api.nhle.com/stats/rest/en/skater/" + req.body.report + "?isAggregate=false&isGame=false&sort=[{%22property%22:%22" + cat + "%22,%22direction%22:%22DESC%22}]&start=0&limit=50&factCayenneExp=gamesPlayed%3E=1&cayenneExp=franchiseId%3D5%20and%20gameTypeId=2%20and%20seasonId%3C=" + yearShort + "%20and%20seasonId%3E=" + yearShort;
         URLs.push(URL);
     });
 

@@ -20,7 +20,7 @@ class LeaderList extends React.Component<MyProps, {}> {
                     return(
                         <div key={x} className="listing" id={x === 4? "divider" : ""}>
                             <div className="name" id={x<5? "large-name": "small-name"}>
-                                {player.playerName}
+                                {player.skaterFullName}
                             </div>
                             <div className="number" id={x<5? "large-stat": "small-stat"}>
                                 {this.props.basic? player[this.props.category] : player[this.props.category].toFixed(2)}

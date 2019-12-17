@@ -69,7 +69,7 @@ class Players extends React.Component<MyProps, MyState> {
                 }),
                 fetch('/api/players', {
                     method: 'POST', 
-                    body: JSON.stringify({ cats: ["goalsPer60Minutes", "assistsPer60Minutes", "pointsPer60Minutes"], type: "core", report: "scoring", year: year}), 
+                    body: JSON.stringify({ cats: ["goalsPer605v5", "assistsPer605v5", "pointsPer605v5"], type: "core", report: "scoringRates", year: year}), 
                     headers: {"Content-Type": "application/json"}
                 })
             ]);
@@ -92,7 +92,7 @@ class Players extends React.Component<MyProps, MyState> {
         if (this.state.adv[0].data.length === 0 && id === "rates") {
             let results = await fetch('/api/players', {
                 method: 'POST',
-                body: JSON.stringify({ cats: ["goalsPer60Minutes", "assistsPer60Minutes", "pointsPer60Minutes"], type: "core", report: "scoring"}),
+                body: JSON.stringify({ cats: ["goalsPer605v5", "assistsPer605v5", "pointsPer605v5"], type: "core", report: "scoringRates"}),
                 headers: {"Content-Type": "application/json"}
             });
             this.setState({
@@ -131,9 +131,9 @@ class Players extends React.Component<MyProps, MyState> {
                     }
                     {this.state.filter === 'rates' &&
                         <div id="leaders">
-                            <LeaderSection title="Goals/60" list={this.state.adv[0].data} category="goalsPer60Minutes" />
-                            <LeaderSection title="Assists/60" list={this.state.adv[1].data} category="assistsPer60Minutes" />
-                            <LeaderSection title="Points/60" list={this.state.adv[2].data} category="pointsPer60Minutes" />
+                            <LeaderSection title="Goals/60" list={this.state.adv[0].data} category="goalsPer605v5" />
+                            <LeaderSection title="Assists/60" list={this.state.adv[1].data} category="assistsPer605v5" />
+                            <LeaderSection title="Points/60" list={this.state.adv[2].data} category="pointsPer605v5" />
                         </div>
                     }
                 </div>
