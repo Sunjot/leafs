@@ -25,11 +25,12 @@ var playerSchema = new Schema({
 
 var Player = mongoose.model('Player', playerSchema);
 
+dotenv.config({path:__dirname+'/../.env'})
 dotenv.config();
 
 const uri: string = "mongodb+srv://sunjotsingh:" + process.env.MDBPASS + "@tvtracker-bykmv.mongodb.net/leafs?retryWrites=true&w=majority";
 
-mongoose.connect(uri, {useNewUrlParser: true}).catch(function(err: string) {
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch(function(err: string) {
     console.log("Error connecting to DB: " + err);
 });
   

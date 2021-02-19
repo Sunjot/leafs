@@ -7,10 +7,11 @@ const MongoClient = require('mongodb').MongoClient;
 const app = express();
 app.use(bodyParser.json());
 
+dotenv.config({path:__dirname+'/../.env'});
 dotenv.config();
 
 const uri = "mongodb+srv://sunjotsingh:" + process.env.MDBPASS + "@tvtracker-bykmv.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true});
 
 var collection: any;
 var players: any;
@@ -44,7 +45,6 @@ function getYears(req: any, res: any, next: any) {
 }
 
 app.post('/api/players', getYears, async (req, res) => {
-
     // When calling the route as a result of an action (like changing the year itself on the page), 
     // the year will get passed as part of the body and so that will be used instead
     let yearShort = req.body.year? req.body.year.replace("-", "") : res.locals.years[res.locals.years.length - 1].replace("-", "");
